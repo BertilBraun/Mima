@@ -92,7 +92,7 @@ private:
                 return;
             }
 
-            jumpLocations[element] = (int)instructions.size() - 1;
+            jumpLocations[element] = (int)instructions.size();
         }
     }
 

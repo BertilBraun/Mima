@@ -2,8 +2,8 @@
 #include "Instructions.h"
 
 void Mima::step() {
-    instructions[Ir.v]->run(*this);
     Ir.v++;
+    instructions[Ir.v - 1]->run(*this);
 }
 
 bool Mima::canStep() {
