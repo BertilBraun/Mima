@@ -1,5 +1,17 @@
 
 // This is a Comment
+	LDC 0x800000 // This is another Comment
+
+// This is a Jump position declaration
+Loop:
+// you can ignore Case sensitivity ADD = add = aDd
+	rar
+	PRINTAKKU
+	JMP Loop
+
+
+
+// This is a Comment
 	LDC 200 // This is another Comment
 	STV 1
 

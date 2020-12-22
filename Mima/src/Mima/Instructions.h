@@ -6,6 +6,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <bitset>
 
 struct instruction {
     virtual void run(Mima& mima) = 0;
@@ -145,9 +146,8 @@ struct RAR : public instruction {
     // Inherited via instruction
     virtual void run(Mima& mima) override
     {
-        // TODO does this work correctly?
         int carry = mima.Akku.v & 1;
-        mima.Akku.v = (mima.Akku.v >> 1) | (carry << 23);
+        mima.Akku.v = ((mima.Akku.v >> 1) & ~(3 << 23)) | (carry << 23);
     }
 };
 
@@ -179,11 +179,18 @@ static std::string getHexRepr(int v, int lengthInBits) {
     return stream.str();
 }
 
+static std::string getBinRepr(int v) {
+    std::stringstream stream;
+    std::bitset<24> x(v);
+    stream << x << "b";
+    return stream.str();
+}
+
 struct PRINTAKKU : public instruction {
     // Inherited via instruction
     virtual void run(Mima& mima) override
     {
-        std::cout << "Akku:   " << " hex: " << getHexRepr(mima.Akku.v, 24) << " dez: " << mima.Akku.v << std::endl;
+        std::cout << "Akku:   " << " bin: " << getBinRepr(mima.Akku.v) << " hex: " << getHexRepr(mima.Akku.v, 24) << " dez: " << mima.Akku.v << std::endl;
     }
 };
 
@@ -194,7 +201,7 @@ struct PRINT : public instruction {
     // Inherited via instruction
     virtual void run(Mima& mima) override
     {
-        std::cout << getHexRepr(a.v, 20) << ": hex: " << getHexRepr(mima.M[a.v].v, 24) << " dez: " << mima.M[a.v].v << std::endl;
+        std::cout << getHexRepr(a.v, 20) << " bin: " << getBinRepr(mima.M[a.v].v) << ": hex: " << getHexRepr(mima.M[a.v].v, 24) << " dez: " << mima.M[a.v].v << std::endl;
     }
 };
 
