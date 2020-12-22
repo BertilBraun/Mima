@@ -1,0 +1,11 @@
+
+// This is a Comment
+	LDC 200 // This is another Comment
+	STV 1
+
+// This is a Jump position declaration
+INC:
+// you can ignore Case sensitivity ADD = add = aDd
+	add 1
+	PRINTAKKU
+	JMP INC
