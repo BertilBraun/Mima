@@ -32,10 +32,16 @@ int main()
         // - you could enable the user to go through step by step
         // - you could delay each step, so that you can analize the runtime
 
+        auto start = std::chrono::high_resolution_clock::now();
+
         while (mima.canStep()) {
             mima.step();
             //std::this_thread::sleep_for(std::chrono::milliseconds(200));
         }
+
+        auto finish = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed = finish - start;
+        std::cout << "Elapsed time: " << elapsed.count() << " s\n";
     }
 
     std::cout << "Have a nice Day!" << std::endl;
