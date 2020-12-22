@@ -23,10 +23,10 @@ int main()
 
         auto instructions = InstructionParser().parse(filePath);
 
-        if (instructions.empty())
+        if (!instructions.has_value())
             continue;
 
-        Mima mima(instructions);
+        Mima mima(*instructions);
 
         // TODO for future, 
         // - you could enable the user to go through step by step

@@ -7,6 +7,7 @@
 
 #include "Instructions.h"
 #include "Util.h"
+#include <optional>
 
 class InstructionParser {
 private:
@@ -26,14 +27,14 @@ private:
     std::vector<JumpLoad*> jumpLoads;
 
 public:
-    std::vector<instruction*> parse(const std::string& filePath) {
+    std::optional<std::vector<instruction*>> parse(const std::string& filePath) {
 
         std::string line;
         std::ifstream file(filePath);
 
         if (!file.is_open()) {
             std::cout << "Couldn't open the provided File: " << filePath<< std::endl;
-            return {};
+            return std::nullopt;
         }
 
         std::vector<std::pair<std::string, int>> lines;
@@ -50,15 +51,15 @@ public:
                 continue;
 
             auto instruction = parseLine(pair.first, pair.second);
-            if (instruction == nullptr)
-                return {};
-            instructions.push_back(instruction);
+            if (!instruction.has_value())
+                return std::nullopt;
+            instructions.push_back(*instruction);
         }
 
         for (auto jumpLoad : jumpLoads) {
             if (jumpLocations.find(toLower(jumpLoad->element)) == jumpLocations.end()) {
                 std::cout << "Jump location could not be found! " << jumpLoad->element << std::endl;
-                return {};
+                return std::nullopt;
             }
             if (jumpLoad->type == "JMP")
                 instructions[jumpLoad->idx] = new JMP(jumpLocations[jumpLoad->element]);
@@ -88,20 +89,18 @@ private:
             element = toLower(element);
             if (jumpLocations.find(element) != jumpLocations.end()) {
                 std::cout << "Error on line: " << lineNumber << " Jump loaction was already defined: " << element << std::endl;
-                // TODO Error
-                break;
+                return;
             }
 
-            jumpLocations[element] = instructions.size() - 1;
+            jumpLocations[element] = (int)instructions.size() - 1;
         }
     }
 
-    instruction* parseLine(const std::string& line, int lineNumber) {
+    std::optional<instruction*> parseLine(const std::string& line, int lineNumber) {
 
         auto error = [lineNumber, line](const char* msg) {
             std::cout << "Error on line: " << line << " : " << lineNumber << " with message: " << msg << std::endl;
-            // TODO Error
-            return nullptr;
+            return std::nullopt;
         };
 
         std::vector<std::string> elements = split(line, ' ');
@@ -155,13 +154,13 @@ private:
             else if (instructionCode == "jmp") {
                 if (elements.size() != 2)
                     return error("Not the correct amount of parameters for 'JMP'! 1 expected!");
-                jumpLoads.push_back(new JumpLoad(toLower(elements[1]), instructions.size(), "JMP"));
+                jumpLoads.push_back(new JumpLoad(toLower(elements[1]), (int)instructions.size(), "JMP"));
                 return jumpLoads.back();
             }
             else if (instructionCode == "jmn") {
                 if (elements.size() != 2)
                     return error("Not the correct amount of parameters for 'JMN'! 1 expected!");
-                jumpLoads.push_back(new JumpLoad(toLower(elements[1]), instructions.size(), "JMN"));
+                jumpLoads.push_back(new JumpLoad(toLower(elements[1]), (int)instructions.size(), "JMN"));
                 return jumpLoads.back();
             }
             else if (instructionCode == "halt") {
@@ -213,6 +212,8 @@ private:
         {
             if (s.find("0x") != std::string::npos)
                 return std::stoi(s.substr(2, s.length() - 2), nullptr, 16);
+            if (s.back() == 'b')
+                return std::stoi(s.substr(0, s.length() - 1), nullptr, 2);
             else
                 return std::stoi(s);
         }
