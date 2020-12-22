@@ -98,7 +98,7 @@ struct EQL : public instruction {
     {
         if (mima.Akku.v == mima.M[a.v].v)
             mima.Akku.v = -1;
-        else
+        else 
             mima.Akku.v = 0;
     }
 };
@@ -190,7 +190,7 @@ struct PRINTAKKU : public instruction {
     // Inherited via instruction
     virtual void run(Mima& mima) override
     {
-        std::cout << "Akku:   " << " bin: " << getBinRepr(mima.Akku.v) << " hex: " << getHexRepr(mima.Akku.v, 24) << " dez: " << mima.Akku.v << std::endl;
+        std::cout << "Akku:  " << " bin: " << getBinRepr(mima.Akku.v) << ": hex: " << getHexRepr(mima.Akku.v, 24) << " dez: " << mima.Akku.v << std::endl;
     }
 };
 
