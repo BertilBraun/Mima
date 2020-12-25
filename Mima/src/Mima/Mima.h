@@ -11,7 +11,7 @@ public:
     value Akku;
     value Ir;
     // value Iar; TODO idk what that does
-    value M[2 << 20];
+    value M[1 << 20];
 
     std::vector<instruction*> instructions;
 
