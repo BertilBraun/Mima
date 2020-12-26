@@ -3,46 +3,77 @@
 
 #include <string>
 #include <iostream>
+#include <emscripten/emscripten.h>
 #include <chrono>
 #include <thread>
 
-int main()
-{
-    std::string input;
-    std::string filePath = "example/Example.mima";
+void Mima::step() {
+    Ir.v++;
+    instructions[Ir.v - 1]->run(*this);
+}
 
-    while (input != "q")
-    {
-        std::cout << "Input your Program File ('q' to exit, 'r' to relaunch): ";
-        std::cin >> input;
+bool Mima::canStep() {
+    return M != nullptr && Ir.v < instructions.size();
+}
 
-        if (input != "r")
-            filePath = input;
-        if (input == "q")
-            break;
+void Mima::free() {
+	delete[] M;
+	M = nullptr;
+	for (auto instr : instructions)
+		delete instr;
+	instructions.clear();
+}
 
-        auto instructions = InstructionParser().parse(filePath);
+Mima mima;
+bool isRunning = false;
 
-        if (!instructions.has_value())
-            continue;
+// Example Code:  "LDC 1\nSTV 1\nINC:\nADD 1\nPRINTAKKU\nJMP INC";
+	
 
-        Mima mima(*instructions);
+extern "C" {
 
-        // TODO for future, 
-        // - you could enable the user to go through step by step
-        // - you could delay each step, so that you can analize the runtime
+	void load(const char* code) {
+		isRunning = false;
+		auto instructions = InstructionParser().parseCode(code);
 
-        auto start = std::chrono::high_resolution_clock::now();
+		mima.free();
 
-        while (mima.canStep()) {
-            mima.step();
-            //std::this_thread::sleep_for(std::chrono::milliseconds(200));
-        }
+		if (instructions.empty()) {
+			std::cout << "Failed to load!" << std::endl;
+			return;
+		}
 
-        auto finish = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = finish - start;
-        std::cout << "Elapsed time: " << elapsed.count() << " s\n";
-    }
+		mima.load(instructions);
+	}
 
-    std::cout << "Have a nice Day!" << std::endl;
+	void step() {
+		if (isRunning) {
+			std::cout << "Already running!" << std::endl;
+			return;
+		}
+		if (mima.canStep()) {
+			mima.step();
+		}
+		else {
+			std::cout << "Can't Step!" << std::endl;
+		}
+	}
+
+	void stop() {
+		isRunning = false;
+	}
+
+	void run() {
+		if (!mima.isLoaded()) {
+			std::cout << "Mima not loaded!" << std::endl;
+			return;
+		}
+
+		isRunning = true;
+
+		while (isRunning && mima.canStep()) {
+			mima.step();
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		}
+	}
 }

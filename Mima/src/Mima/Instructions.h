@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Mima.h"
 #include "Data.h"
+#include "Mima.h"
 
 #include <iostream>
 #include <iomanip>
@@ -9,6 +9,8 @@
 #include <bitset>
 
 struct instruction {
+    virtual ~instruction() {
+    }
     virtual void run(Mima& mima) = 0;
 };
 

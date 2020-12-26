@@ -143,7 +143,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Mima\Mima.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Mima\Data.h" />

@@ -7,7 +7,6 @@
 
 #include "Instructions.h"
 #include "Util.h"
-#include <optional>
 
 class InstructionParser {
 private:
@@ -27,14 +26,14 @@ private:
     std::vector<JumpLoad*> jumpLoads;
 
 public:
-    std::optional<std::vector<instruction*>> parse(const std::string& filePath) {
+    std::vector<instruction*> parse(const std::string& filePath) {
 
         std::string line;
         std::ifstream file(filePath);
 
         if (!file.is_open()) {
             std::cout << "Couldn't open the provided File: " << filePath<< std::endl;
-            return std::nullopt;
+            return {};
         }
 
         std::vector<std::pair<std::string, int>> lines;
@@ -51,15 +50,53 @@ public:
                 continue;
 
             auto instruction = parseLine(pair.first, pair.second);
-            if (!instruction.has_value())
-                return std::nullopt;
-            instructions.push_back(*instruction);
+            if (instruction == nullptr)
+                return {};
+            instructions.push_back(instruction);
         }
 
         for (auto jumpLoad : jumpLoads) {
             if (jumpLocations.find(toLower(jumpLoad->element)) == jumpLocations.end()) {
                 std::cout << "Jump location could not be found! " << jumpLoad->element << std::endl;
-                return std::nullopt;
+                return {};
+            }
+            if (jumpLoad->type == "JMP")
+                instructions[jumpLoad->idx] = new JMP(jumpLocations[jumpLoad->element]);
+            else if (jumpLoad->type == "JMN")
+                instructions[jumpLoad->idx] = new JMN(jumpLocations[jumpLoad->element]);
+        }
+
+        std::cout << "Parsing complete! " << instructions.size() << " instructions" << std::endl;
+        return instructions;
+    }
+
+    std::vector<instruction*> parseCode(const std::string& code) {
+
+		std::vector<std::string> tokens = split(code, '\n');
+        std::vector<std::pair<std::string, int>> lines;
+        for (int lineCount = 1; lineCount <= tokens.size(); lineCount++) {
+			std::string& line = tokens[lineCount - 1];
+            trim(line);
+            line = line.substr(0, line.find("//", 0));
+            if (line != "")
+                lines.push_back({ line, lineCount });
+        }
+
+        for (auto pair : lines) {
+            parseLocation(pair.first, pair.second);
+            if (pair.first == "")
+                continue;
+
+            auto instruction = parseLine(pair.first, pair.second);
+            if (instruction == nullptr)
+                return {};
+            instructions.push_back(instruction);
+        }
+
+        for (auto jumpLoad : jumpLoads) {
+            if (jumpLocations.find(toLower(jumpLoad->element)) == jumpLocations.end()) {
+                std::cout << "Jump location could not be found! " << jumpLoad->element << std::endl;
+                return {};
             }
             if (jumpLoad->type == "JMP")
                 instructions[jumpLoad->idx] = new JMP(jumpLocations[jumpLoad->element]);
@@ -96,11 +133,11 @@ private:
         }
     }
 
-    std::optional<instruction*> parseLine(const std::string& line, int lineNumber) {
+    instruction* parseLine(const std::string& line, int lineNumber) {
 
         auto error = [lineNumber, line](const char* msg) {
             std::cout << "Error on line: " << line << " : " << lineNumber << " with message: " << msg << std::endl;
-            return std::nullopt;
+            return nullptr;
         };
 
         std::vector<std::string> elements = split(line, ' ');
@@ -208,18 +245,11 @@ private:
     }
 
     int parseInt(const std::string& s) {
-        try
-        {
-            if (s.find("0x") != std::string::npos)
-                return std::stoi(s.substr(2, s.length() - 2), nullptr, 16);
-            if (s.back() == 'b')
-                return std::stoi(s.substr(0, s.length() - 1), nullptr, 2);
-            else
-                return std::stoi(s);
-        }
-        catch (const std::exception&)
-        {
-            throw std::exception(("Can't parse parameter: " + s).c_str());
-        }
+        if (s.find("0x") != std::string::npos)
+            return std::stoi(s.substr(2, s.length() - 2), nullptr, 16);
+        if (s.back() == 'b')
+            return std::stoi(s.substr(0, s.length() - 1), nullptr, 2);
+        else
+            return std::stoi(s);
     }
 };
