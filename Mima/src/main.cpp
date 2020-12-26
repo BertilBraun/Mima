@@ -9,7 +9,7 @@
 int main()
 {
     std::string input;
-    std::string filePath = "example/Example.mima";
+    std::string filePath = "../example/Example.mima";
 
     while (input != "q")
     {

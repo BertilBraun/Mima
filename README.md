@@ -6,8 +6,8 @@
 
 # Running
  
- - Go ahead and write a Program using the existing mima commands (you can check out 'Mima/example/Example.mima' for reference)
- - Start the Program 'Mima/bin/Mima.exe'
+ - Go ahead and write a Program using the existing mima commands (you can check out 'example/Example.mima' for reference)
+ - Get the latest Release and Start the Program
  - Enter the path to your Program and see the emulation run
 
 # Installation
