@@ -1429,7 +1429,7 @@ function createExportWrapper(name, fixedasm) {
   };
 }
 
-var wasmBinaryFile = 'Index.wasm';
+var wasmBinaryFile = 'index.wasm';
 if (!isDataURI(wasmBinaryFile)) {
   wasmBinaryFile = locateFile(wasmBinaryFile);
 }
@@ -1752,22 +1752,6 @@ var ASM_CONSTS = {
   function _emscripten_resize_heap(requestedSize) {
       requestedSize = requestedSize >>> 0;
       abortOnCannotGrowMemory(requestedSize);
-    }
-
-  var _emscripten_get_now;if (ENVIRONMENT_IS_NODE) {
-    _emscripten_get_now = function() {
-      var t = process['hrtime']();
-      return t[0] * 1e3 + t[1] / 1e6;
-    };
-  } else if (typeof dateNow !== 'undefined') {
-    _emscripten_get_now = dateNow;
-  } else _emscripten_get_now = function() { return performance.now(); }
-  ;
-  function _emscripten_thread_sleep(msecs) {
-      var start = _emscripten_get_now();
-      while (_emscripten_get_now() - start < msecs) {
-        // Do nothing.
-      }
     }
 
   var ENV={};
@@ -4717,7 +4701,6 @@ var asmLibraryArg = {
   "abort": _abort,
   "emscripten_memcpy_big": _emscripten_memcpy_big,
   "emscripten_resize_heap": _emscripten_resize_heap,
-  "emscripten_thread_sleep": _emscripten_thread_sleep,
   "environ_get": _environ_get,
   "environ_sizes_get": _environ_sizes_get,
   "fd_close": _fd_close,
@@ -4738,10 +4721,7 @@ var _load = Module["_load"] = createExportWrapper("load");
 var _step = Module["_step"] = createExportWrapper("step");
 
 /** @type {function(...*):?} */
-var _stop = Module["_stop"] = createExportWrapper("stop");
-
-/** @type {function(...*):?} */
-var _run = Module["_run"] = createExportWrapper("run");
+var _canStep = Module["_canStep"] = createExportWrapper("canStep");
 
 /** @type {function(...*):?} */
 var ___errno_location = Module["___errno_location"] = createExportWrapper("__errno_location");

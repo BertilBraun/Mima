@@ -37,11 +37,9 @@
 	
 	<input type="button" value="Load" onclick="Module.ccall('load', 'void', ['string'], [document.getElementById('CodeInputField').value])">
    
-	<!-- <input type="button" value="Step" onclick="Module.ccall('step', 'void', [], [])"> -->
+	<input type="button" value="Step" onclick="Module.ccall('step', 'void', [], [])">
     
-	<input type="button" value="Stop" onclick="Module.ccall('stop', 'void', [], [])">
-    
-	<input type="button" value="Run" onclick="Module.ccall('run', 'void', [], [])">
+	<input type="button" value="Run" onclick="while (Module.ccall('canStep', 'bool', [], [])) Module.ccall('step', 'void', [], []);">
    
 
     <textarea id="output" rows="8"></textarea>
@@ -98,7 +96,7 @@
         };
       };
     </script>
-    <script async type="text/javascript" src="Index.js"></script>
+    <script async type="text/javascript" src="index.js"></script>
   </body>
 </html>
 

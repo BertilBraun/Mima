@@ -4,8 +4,6 @@
 #include <string>
 #include <iostream>
 #include <emscripten/emscripten.h>
-#include <chrono>
-#include <thread>
 
 void Mima::step() {
     Ir.v++;
@@ -25,7 +23,6 @@ void Mima::free() {
 }
 
 Mima mima;
-bool isRunning = false;
 
 // Example Code:  "LDC 1\nSTV 1\nINC:\nADD 1\nPRINTAKKU\nJMP INC";
 	
@@ -33,7 +30,6 @@ bool isRunning = false;
 extern "C" {
 
 	void load(const char* code) {
-		isRunning = false;
 		auto instructions = InstructionParser().parseCode(code);
 
 		mima.free();
@@ -47,10 +43,6 @@ extern "C" {
 	}
 
 	void step() {
-		if (isRunning) {
-			std::cout << "Already running!" << std::endl;
-			return;
-		}
 		if (mima.canStep()) {
 			mima.step();
 		}
@@ -59,21 +51,7 @@ extern "C" {
 		}
 	}
 
-	void stop() {
-		isRunning = false;
-	}
-
-	void run() {
-		if (!mima.isLoaded()) {
-			std::cout << "Mima not loaded!" << std::endl;
-			return;
-		}
-
-		isRunning = true;
-
-		while (isRunning && mima.canStep()) {
-			mima.step();
-			std::this_thread::sleep_for(std::chrono::milliseconds(1));
-		}
+	bool canStep() {
+		return mima.isLoaded() && mima.canStep();
 	}
 }
