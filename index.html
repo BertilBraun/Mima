@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Emscripten-Generated Code</title>
+    <title>Bertil's MiMa</title>
     <style>
       body {
         width: 80%;
@@ -53,20 +53,18 @@
       padding: 5px;
     }
 
+
     </style>
 </head>
 <body>
-<script type="text/javascript">
-    var stopRunning = false;
-</script>
-
 <table style="width:100%">
     <tr>
         <th>
             <div id="headers">
                 <p class="headerElement">Bertil's MiMa</p>
                 <p class="headerElement"><a onclick="alert('Fuck you');" href="javascript:void(0);"> How to</a></p>
-                <p class="headerElement"><a onclick="alert('Oh no no no no NO!');" href="javascript:void(0);"> Contact</a></p>
+                <p class="headerElement"><a onclick="alert('Oh no no no no NO!');" href="javascript:void(0);">
+                    Contact</a></p>
             </div>
         </th>
         <th>
@@ -80,7 +78,7 @@
 
                     <label>INPUT</label>
                     <input type="button" value="Load"
-                           onclick="Module.ccall('load', 'void', ['string'], [document.getElementById('CodeInputField').value])">
+                           onclick="Module.ccall('load', 'void', ['string'], [editor.getValue()])">
 
                     <input type="button" value="Step" onclick="Module.ccall('step', 'void', [], [])">
 
@@ -89,16 +87,14 @@
                     <input type="button" value="Run" onclick="
                     stopRunning = false;
                     function run() {
-                        if (stopRunning) return;
-                        if (!Module.ccall('canStep', 'bool', [], []))
-                            return;
+                        if (stopRunning || !Module.ccall('canStep', 'bool', [], [])) return;
                         Module.ccall('step', 'void', [], []);
                         setTimeout(() => {  run(); }, 2);
                     }
                     run();">
                 </div>
 
-                <textarea id="CodeInputField" placeholder="Your MIMA Code" rows="4" cols="50"></textarea>
+                <textarea id="CodeInputField"></textarea>
             </div>
         </td>
         <td>
@@ -110,14 +106,22 @@
     </tr>
 </table>
 
+<link rel="stylesheet" href="lib/dracula.css">
+<link rel="stylesheet" href="lib/codemirror.css">
+<script src="lib/codemirror.js"></script>
+<script src="lib/mimaMode.js"></script>
+<script type="text/javascript">
+    var stopRunning = false;
 
-<!-- Create a simple CodeMirror instance -->
-<link rel="stylesheet" href="lib/styles/androidstudio.css">
-<script src="lib/highlight.pack.js"></script>
-<script> hljs.initHighlightingOnLoad(); </script>
+    var editor = new CodeMirror.fromTextArea(document.getElementById("CodeInputField"), {
+        lineNumbers: true,
+        indentUnit: 4,
+        theme: "dracula",
+        lineWrapping: false,
+        autofocus: true
+    });
 
-<pre><code class="Test">Some escaped code to highlight here</code></pre>
-
+</script>
 
 <script type='text/javascript'>
       var Module = {
@@ -165,6 +169,7 @@
           if (text) Module.printErr('[post-exception status] ' + text);
         };
       };
+
 
 
 
