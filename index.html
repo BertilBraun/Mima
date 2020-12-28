@@ -1,14 +1,16 @@
 <!doctype html>
 <html lang="en-us">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Emscripten-Generated Code</title>
     <style>
       body {
+        width: 80%;
         font-family: arial;
-        margin: 0;
-        padding: none;
+        margin: auto;
+        padding: auto;
+        background-color: #333;
       }
 	  
       #output {
@@ -26,27 +28,84 @@
         font-family: 'Lucida Console', Monaco, monospace;
         outline: none;
       }
+      #headers{
+        display: flex;
+      }
+      #buttons{
+        display: flex;
+      }
+      .headerElement{
+        margin: 20px;
+      }
+      a{
+
+      }
+    #spenden {
+      border-radius: 25px;
+      background: #73AD21;
+      padding: 10px 30px 10px 30px;
+    }
+    #OutputDiv {
+      background: #000;
+    }
+    #OutputLabel {
+      color: #555;
+      padding: 5px;
+    }
+
     </style>
-  </head>
-  <body>
+</head>
+<body>
+<table style="width:100%">
+    <tr>
+        <th>
+            <div id="headers">
+                <p class="headerElement">Bertil's MiMa</p>
+                <p class="headerElement"><a onclick="alert('Fuck you');" href="javascript:void(0);"> How to</a></p>
+                <p class="headerElement"><a onclick="alert('Oh no no no no NO!');" href="javascript:void(0);"> Contact</a></p>
+            </div>
+        </th>
+        <th>
+            <button id="spenden" type="button" onclick="alert('Thank you :)');">Spenden</button>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <div id="Code">
+                <div id="buttons">
 
-	<label>Your Code:</label>
-	<textarea id="CodeInputField" placeholder="Your MIMA Code" rows="4" cols="50">
-	</textarea>
-	<br>  
-	
-	<input type="button" value="Load" onclick="Module.ccall('load', 'void', ['string'], [document.getElementById('CodeInputField').value])">
-   
-	<input type="button" value="Step" onclick="Module.ccall('step', 'void', [], [])">
-    
-	<!-- <input type="button" value="Stop" onclick="Module.ccall('stop', 'void', [], [])"> -->
-    
-	<input type="button" value="Run" onclick="Module.ccall('run', 'void', [], [])">
-   
+                    <label>INPUT</label>
+                    <input type="button" value="Load"
+                           onclick="Module.ccall('load', 'void', ['string'], [document.getElementById('CodeInputField').value])">
 
-    <textarea id="output" rows="8"></textarea>
+                    <input type="button" value="Step" onclick="Module.ccall('step', 'void', [], [])">
 
-    <script type='text/javascript'>
+                    <!-- <input type="button" value="Stop" onclick="Module.ccall('stop', 'void', [], [])"> -->
+
+                    <input type="button" value="Run" onclick="Module.ccall('run', 'void', [], [])">
+                </div>
+
+                <textarea id="CodeInputField" placeholder="Your MIMA Code" rows="4" cols="50"></textarea>
+            </div>
+        </td>
+        <td>
+            <div id="OutputDiv">
+                <label id="OutputLabel">OUTPUT</label>
+                <textarea id="output" rows="8"></textarea>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+<!-- Create a simple CodeMirror instance -->
+<link rel="stylesheet" href="lib/styles/androidstudio.css">
+<script src="lib/highlight.pack.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+
+<pre><code class="Test">Some escaped code to highlight here</code></pre>
+
+<script type='text/javascript'>
       var Module = {
         preRun: [],
         postRun: [],
@@ -55,11 +114,6 @@
           if (element) element.value = ''; // clear browser cache
           return function(text) {
             if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-            // These replacements are necessary if you render to raw HTML
-            //text = text.replace(/&/g, "&amp;");
-            //text = text.replace(/</g, "&lt;");
-            //text = text.replace(/>/g, "&gt;");
-            //text = text.replace('\n', '<br>', 'g');
             console.log(text);
             if (element) {
               element.value += text + "\n";
@@ -97,9 +151,13 @@
           if (text) Module.printErr('[post-exception status] ' + text);
         };
       };
-    </script>
-    <script async type="text/javascript" src="index.js"></script>
-  </body>
+
+
+
+
+</script>
+<script async type="text/javascript" src="index.js"></script>
+</body>
 </html>
 
 
