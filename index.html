@@ -56,6 +56,10 @@
     </style>
 </head>
 <body>
+<script type="text/javascript">
+    var stopRunning = false;
+</script>
+
 <table style="width:100%">
     <tr>
         <th>
@@ -80,9 +84,18 @@
 
                     <input type="button" value="Step" onclick="Module.ccall('step', 'void', [], [])">
 
-                    <!-- <input type="button" value="Stop" onclick="Module.ccall('stop', 'void', [], [])"> -->
+                    <input type="button" value="Stop" onclick="stopRunning = true;">
 
-                    <input type="button" value="Run" onclick="Module.ccall('run', 'void', [], [])">
+                    <input type="button" value="Run" onclick="
+                    stopRunning = false;
+                    function run() {
+                        if (stopRunning) return;
+                        if (!Module.ccall('canStep', 'bool', [], []))
+                            return;
+                        Module.ccall('step', 'void', [], []);
+                        setTimeout(() => {  run(); }, 2);
+                    }
+                    run();">
                 </div>
 
                 <textarea id="CodeInputField" placeholder="Your MIMA Code" rows="4" cols="50"></textarea>
@@ -104,6 +117,7 @@
 <script> hljs.initHighlightingOnLoad(); </script>
 
 <pre><code class="Test">Some escaped code to highlight here</code></pre>
+
 
 <script type='text/javascript'>
       var Module = {
