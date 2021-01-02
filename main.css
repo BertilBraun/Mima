@@ -113,7 +113,6 @@ body {
     position: relative;
     height: 100vh;
     max-width: 1332px;
-    margin: 0px auto 50px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
