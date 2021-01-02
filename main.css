@@ -45,7 +45,7 @@ body {
     width: 100%;
     align-items: center;
     justify-content: space-between;
-    margin-left: 5%;
+    margin-left: 20px;
   }
   
   .links-left {
@@ -58,7 +58,7 @@ body {
     text-decoration: none;
     color: #fff;
     font-size: 14px;
-    margin: 0 40px;
+    margin: 0 20px;
     transition: 0.1s ease-in;
   }
   
@@ -121,19 +121,21 @@ body {
   }
 
   .part{
-    margin: 0 10px;
     padding: 0;
     width: 50%;
     height: 100%;
+  }
+  .partright{
+    margin-right: 10px;
+  }
+  .partleft{
+    margin-left: 10px;
   }
   textarea{
     padding: 14px;
     box-sizing: border-box;
     width: 100%;
-    min-height: calc(100% - 40px);
     height: calc(100% - 40px);
-    min-width: 100%;
-    max-width: 100%;
     resize: none;
     outline: none;
     border: none;
@@ -164,7 +166,7 @@ body {
       cursor: pointer;
   }
 
-  #load{
+  #step{
       background-color: #2CADE6;
   }
 

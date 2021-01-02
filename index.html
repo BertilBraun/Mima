@@ -2,16 +2,92 @@
 <html lang="en-us">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Bertil's MiMa</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Bertil's MiMa</title>
 
-  <link rel="stylesheet" href="lib/dracula.css">
-  <link rel="stylesheet" href="lib/codemirror.css">
-  <link rel="stylesheet" href="main.css">
-  <script src="lib/codemirror.js"></script>
-  <script src="lib/mimaMode.js"></script>
-  <script type="text/javascript">
+    <link rel="stylesheet" href="lib/dracula.css">
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <link rel="stylesheet" href="main.css">
+
+    <link rel="icon" href="favicon.ico">
+</head>
+
+<body>
+
+<div id="nav">
+    <div id="logo">
+        <a>
+            <svg xmlns="http://www.w3.org/2000/svg" width="140.072" height="21.59" viewBox="0 0 163.072 21.59">
+                <path id="Path_41" data-name="Path 41"
+                      d="M16.436-5.432A4.639,4.639,0,0,0,13.16-10a4.372,4.372,0,0,0,1.372-3.332c0-3.024-2.436-5.152-5.852-5.152H2.128V0H10.36C13.916,0,16.436-2.24,16.436-5.432Zm-8.064-9.8c1.54,0,2.408.784,2.408,2.1S9.912-11,8.372-11h-2.6v-4.228Zm4.34,9.66c0,1.456-.98,2.324-2.632,2.324H5.768V-7.9H10.08C11.732-7.9,12.712-7,12.712-5.572ZM32-5.656a8.916,8.916,0,0,0,.252-2.072,6.306,6.306,0,0,0-6.524-6.44A7.149,7.149,0,0,0,18.48-6.916,7.265,7.265,0,0,0,26.068.336a8.474,8.474,0,0,0,5.544-2.072L30.044-4.312a6.249,6.249,0,0,1-3.864,1.4,3.659,3.659,0,0,1-3.892-2.744Zm-9.716-2.66a3.414,3.414,0,0,1,3.3-2.8,2.82,2.82,0,0,1,3,2.8Zm21.42-5.544a4.1,4.1,0,0,0-1.232-.168,4.806,4.806,0,0,0-3.808,1.82V-13.86H35.2V0h3.78V-6.916c0-2.38,1.456-3.612,3.724-3.612h1.008Zm11.256,10.7c-.98.084-1.568.112-1.792.112-1.792,0-2.576-.588-2.576-2.156v-5.46h3.92V-13.86H50.6v-3.5h-3.78v3.5H44.632v3.192h2.184v5.8C46.816-1.4,48.86.336,52.36.336A10.723,10.723,0,0,0,54.964,0ZM57.708,0h3.78V-13.86h-3.78Zm-.532-18.9a2.338,2.338,0,0,0,2.408,2.324A2.362,2.362,0,0,0,62.02-18.9a2.367,2.367,0,0,0-2.436-2.352A2.344,2.344,0,0,0,57.176-18.9ZM65.24,0h3.78V-21H65.24Zm7.98-10.7H76.1l1.568-7.784H73.36Zm6.16,8.344A7,7,0,0,0,85.12.336,6.108,6.108,0,0,0,88.984-.84a3.847,3.847,0,0,0,1.54-3.248c0-2.044-1.2-3.136-3.892-4.228l-1.344-.56c-1.092-.448-1.456-.7-1.456-1.232,0-.644.56-.98,1.484-.98a4.445,4.445,0,0,1,3.108,1.316l1.9-2.324a6.442,6.442,0,0,0-4.984-2.072c-3.024,0-5.1,1.54-5.1,4.144,0,2.044,1.232,3.192,3.78,4.228l1.484.616c1.036.448,1.428.672,1.428,1.26,0,.756-.756,1.148-1.764,1.148a5.355,5.355,0,0,1-3.892-1.876Zm38.948-16.464-7.812,10-7.812-10h-1.232V0h3.78V-9.856L109.9-4.032h1.232l4.648-5.824V0h3.78V-18.816ZM135.044-8.232c0-3.836-2.324-5.936-5.936-5.936a7.558,7.558,0,0,0-6.048,2.856l1.96,2.324a4.735,4.735,0,0,1,3.668-1.9,2.268,2.268,0,0,1,2.576,2.436v.616h-3.472c-3.22,0-5.236,1.54-5.236,4.032,0,2.436,1.848,4.144,4.788,4.144a5.774,5.774,0,0,0,4.228-1.68V0h3.472Zm-3.78,3.052a2.755,2.755,0,0,1-2.912,2.744c-1.2,0-1.988-.588-1.988-1.512s.7-1.4,1.932-1.4h2.968Zm24.528-13.636-7.812,10-7.812-10h-1.232V0h3.78V-9.856l4.648,5.824H148.6l4.648-5.824V0h3.78V-18.816ZM160.888,0h3.78V-13.86h-3.78Zm-.532-18.9a2.338,2.338,0,0,0,2.408,2.324A2.362,2.362,0,0,0,165.2-18.9a2.367,2.367,0,0,0-2.436-2.352A2.344,2.344,0,0,0,160.356-18.9Z"
+                      transform="translate(-2.128 21.252)"
+                      fill="#755DF7"/>
+            </svg>
+        </a>
+    </div>
+
+    <div class="links">
+        <div class="links-left">
+            <a class="link highlighted" onclick="alert('Figure it out..');">
+                <span>How To</span>
+            </a>
+            <a class="link highlighted" onclick="alert('No nonono no no NO!');">
+                <span>Contact</span>
+            </a>
+
+        </div>
+        <div class="links-right">
+            <a href="https://pyro.page.link/q9Ku" target="_blank" id="signup-button">
+                <span>Donate</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div id="Code" class="part partright">
+        <div class="top-bar">
+
+            <label>INPUT</label>
+            <div class="buttons">
+                <input type="button" id="step" class="control-buttons" value="Step"
+                       onclick="Module.ccall('step', 'void', [], [])">
+
+                <input type="button" id="stop" class="control-buttons" value="Stop" onclick="stopRunning = true;">
+
+                <input type="button" id="run" class="control-buttons" value="Run" onclick="
+            Module.ccall('load', 'void', ['string'], [editor.getValue()]);
+            stopRunning = false;
+            function run() {
+                if (stopRunning || !Module.ccall('canStep', 'bool', [], [])) return;
+                Module.ccall('step', 'void', [], []);
+                setTimeout(() => {  run(); }, 2);
+            }
+            run();">
+            </div>
+        </div>
+
+        <textarea id="CodeInputField">
+    ldc 1
+    stv 1
+inc:
+	add 1
+    printakku
+    jmp inc</textarea>
+    </div>
+    <div id="OutputDiv" class="part partleft">
+        <div class="top-bar">
+            <label>OUTPUT</label>
+        </div>
+        <textarea id="output-field"></textarea>
+    </div>
+</div>
+
+</body>
+<script src="lib/codemirror.js"></script>
+<script src="lib/mimaMode.js"></script>
+<script type="text/javascript">
     var stopRunning = false;
 
     var editor = new CodeMirror.fromTextArea(document.getElementById("CodeInputField"), {
@@ -22,14 +98,15 @@
       autofocus: true
     });
 
-  </script>
 
-  <script type='text/javascript'>
+</script>
+
+<script type='text/javascript'>
     var Module = {
       preRun: [],
       postRun: [],
       print: (function () {
-        var element = document.getElementById('output');
+        var element = document.getElementById('output-field');
         if (element) element.value = ''; // clear browser cache
         return function (text) {
           if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
@@ -75,155 +152,8 @@
 
 
 
-  </script>
-  <script async type="text/javascript" src="index.js"></script>
-</head>
 
-<body>
-
-  <div id="nav">
-    <div id="logo">
-      <a >
-        <svg xmlns="http://www.w3.org/2000/svg" width="140.072" height="21.59" viewBox="0 0 163.072 21.59">
-          <path id="Path_41" data-name="Path 41" d="M16.436-5.432A4.639,4.639,0,0,0,13.16-10a4.372,4.372,0,0,0,1.372-3.332c0-3.024-2.436-5.152-5.852-5.152H2.128V0H10.36C13.916,0,16.436-2.24,16.436-5.432Zm-8.064-9.8c1.54,0,2.408.784,2.408,2.1S9.912-11,8.372-11h-2.6v-4.228Zm4.34,9.66c0,1.456-.98,2.324-2.632,2.324H5.768V-7.9H10.08C11.732-7.9,12.712-7,12.712-5.572ZM32-5.656a8.916,8.916,0,0,0,.252-2.072,6.306,6.306,0,0,0-6.524-6.44A7.149,7.149,0,0,0,18.48-6.916,7.265,7.265,0,0,0,26.068.336a8.474,8.474,0,0,0,5.544-2.072L30.044-4.312a6.249,6.249,0,0,1-3.864,1.4,3.659,3.659,0,0,1-3.892-2.744Zm-9.716-2.66a3.414,3.414,0,0,1,3.3-2.8,2.82,2.82,0,0,1,3,2.8Zm21.42-5.544a4.1,4.1,0,0,0-1.232-.168,4.806,4.806,0,0,0-3.808,1.82V-13.86H35.2V0h3.78V-6.916c0-2.38,1.456-3.612,3.724-3.612h1.008Zm11.256,10.7c-.98.084-1.568.112-1.792.112-1.792,0-2.576-.588-2.576-2.156v-5.46h3.92V-13.86H50.6v-3.5h-3.78v3.5H44.632v3.192h2.184v5.8C46.816-1.4,48.86.336,52.36.336A10.723,10.723,0,0,0,54.964,0ZM57.708,0h3.78V-13.86h-3.78Zm-.532-18.9a2.338,2.338,0,0,0,2.408,2.324A2.362,2.362,0,0,0,62.02-18.9a2.367,2.367,0,0,0-2.436-2.352A2.344,2.344,0,0,0,57.176-18.9ZM65.24,0h3.78V-21H65.24Zm7.98-10.7H76.1l1.568-7.784H73.36Zm6.16,8.344A7,7,0,0,0,85.12.336,6.108,6.108,0,0,0,88.984-.84a3.847,3.847,0,0,0,1.54-3.248c0-2.044-1.2-3.136-3.892-4.228l-1.344-.56c-1.092-.448-1.456-.7-1.456-1.232,0-.644.56-.98,1.484-.98a4.445,4.445,0,0,1,3.108,1.316l1.9-2.324a6.442,6.442,0,0,0-4.984-2.072c-3.024,0-5.1,1.54-5.1,4.144,0,2.044,1.232,3.192,3.78,4.228l1.484.616c1.036.448,1.428.672,1.428,1.26,0,.756-.756,1.148-1.764,1.148a5.355,5.355,0,0,1-3.892-1.876Zm38.948-16.464-7.812,10-7.812-10h-1.232V0h3.78V-9.856L109.9-4.032h1.232l4.648-5.824V0h3.78V-18.816ZM135.044-8.232c0-3.836-2.324-5.936-5.936-5.936a7.558,7.558,0,0,0-6.048,2.856l1.96,2.324a4.735,4.735,0,0,1,3.668-1.9,2.268,2.268,0,0,1,2.576,2.436v.616h-3.472c-3.22,0-5.236,1.54-5.236,4.032,0,2.436,1.848,4.144,4.788,4.144a5.774,5.774,0,0,0,4.228-1.68V0h3.472Zm-3.78,3.052a2.755,2.755,0,0,1-2.912,2.744c-1.2,0-1.988-.588-1.988-1.512s.7-1.4,1.932-1.4h2.968Zm24.528-13.636-7.812,10-7.812-10h-1.232V0h3.78V-9.856l4.648,5.824H148.6l4.648-5.824V0h3.78V-18.816ZM160.888,0h3.78V-13.86h-3.78Zm-.532-18.9a2.338,2.338,0,0,0,2.408,2.324A2.362,2.362,0,0,0,165.2-18.9a2.367,2.367,0,0,0-2.436-2.352A2.344,2.344,0,0,0,160.356-18.9Z" transform="translate(-2.128 21.252)" 
-          fill="#755DF7"/>
-        </svg>
-</a>
-    </div>
-
-    <div class="links">
-      <div class="links-left">
-        <a class="link highlighted">
-          <span>How To</span>
-        </a>
-        <a class="link highlighted">
-          <span>Contact</span>
-        </a>
-      
-      </div>
-      <div class="links-right">
-        <a href="https://pyro.page.link/q9Ku" target="_blank" id="signup-button">
-          <span>Donate</span>
-        </a>
-      </div>
-    </div>
-
-    <div
-      href="#"
-      class="nav-icon">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="30"
-        height="30"
-        viewBox="0 0 191 152"
-      >
-        <g
-          id="Group_43"
-          data-name="Group 43"
-          transform="translate(-1948 -4244)"
-        >
-          <rect
-            id="Rectangle_56"
-            data-name="Rectangle 56"
-            width="191"
-            height="29"
-            rx="14.5"
-            transform="translate(1948 4244)"
-            fill="#fff"
-          />
-          <rect
-            id="Rectangle_57"
-            data-name="Rectangle 57"
-            width="148"
-            height="29"
-            rx="14.5"
-            transform="translate(1991 4306)"
-            fill="#fff"
-          />
-          <rect
-            id="Rectangle_58"
-            data-name="Rectangle 58"
-            width="96"
-            height="29"
-            rx="14.5"
-            transform="translate(2043 4367)"
-            fill="#fff"
-          />
-        </g>
-      </svg>
-    </div>
-    <div
-      class="nav-close-icon"
-      @click="closeNav()"
-      v-bind:class="{ nav_icon_close_opened: this.showNav }"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="30"
-        height="30"
-        viewBox="0 0 173.282 173.282"
-      >
-        <g
-          id="Group_43"
-          data-name="Group 43"
-          transform="translate(-1956.718 -4482)"
-        >
-          <rect
-            id="Rectangle_59"
-            data-name="Rectangle 59"
-            width="212.754"
-            height="32.303"
-            rx="16.151"
-            transform="translate(1979.56 4482) rotate(45)"
-            fill="#fff"
-          />
-          <rect
-            id="Rectangle_60"
-            data-name="Rectangle 60"
-            width="212.754"
-            height="32.303"
-            rx="16.152"
-            transform="translate(2130 4504.841) rotate(135)"
-            fill="#fff"
-          />
-        </g>
-      </svg>
-    </div>
-  </div>
-  
-  <div class="content">
-    <div id="Code" class="part">
-      <div class="top-bar">
-  
-        <label>INPUT</label>
-        <div class="buttons">
-        <input type="button" id="load" class="control-buttons" value="Load" onclick="Module.ccall('load', 'void', ['string'], [editor.getValue()])">
-  
-        <input type="button" id="step" class="control-buttons" value="Step" onclick="Module.ccall('step', 'void', [], [])">
-  
-        <input type="button" id="stop" class="control-buttons" value="Stop" onclick="stopRunning = true;">
-  
-        <input type="button" id="run" class="control-buttons" value="Run" onclick="
-          stopRunning = false;
-          function run() {
-              if (stopRunning || !Module.ccall('canStep', 'bool', [], [])) return;
-              Module.ccall('step', 'void', [], []);
-              setTimeout(() => {  run(); }, 2);
-          }
-          run();">
-        </div>
-      </div>
-  
-      <textarea id="CodeInputField"></textarea>
-    </div>
-    <div id="OutputDiv" class="part">
-      <div class="top-bar">
-        <label>OUTPUT</label>
-      </div>
-      <textarea id="output-field" readonly="true"></textarea>
-    </div>
-  </div>
-
-</body>
+</script>
+<script async type="text/javascript" src="index.js"></script>
 
 </html>
