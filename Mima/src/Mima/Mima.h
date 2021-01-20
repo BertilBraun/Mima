@@ -10,13 +10,19 @@ class Mima {
 public:
     value Akku;
     value Ir;
-    // value Iar; TODO idk what that does
-    value M[1 << 20];
+    value* M;
 
     std::vector<instruction*> instructions;
 
 public:
-    Mima(const std::vector<instruction*>& instructions) : instructions(instructions) {}
+    Mima(const std::vector<instruction*>& instructions) : instructions(instructions) {
+        M = new value[1 << 20];
+    }
+
+    ~Mima()
+    {
+        delete[] M;
+    }
 
     void step();
     bool canStep();
