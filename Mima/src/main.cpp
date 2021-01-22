@@ -1,48 +1,32 @@
 
 #include "Mima/Parser.h"
 
-#include <string>
 #include <iostream>
 #include <chrono>
-#include <thread>
 
-int main()
+int main(int argc, char* argv[])
 {
-    std::string input;
-    std::string filePath = "../example/Example.mima";
-
-    while (input != "q")
-    {
-        std::cout << "Input your Program File ('q' to exit, 'r' to relaunch): ";
-        std::cin >> input;
-
-        if (input != "r")
-            filePath = input;
-        if (input == "q")
-            break;
-
-        auto instructions = InstructionParser().parse(filePath);
-
-        if (!instructions.has_value())
-            continue;
-
-        Mima mima(*instructions);
-
-        // TODO for future, 
-        // - you could enable the user to go through step by step
-        // - you could delay each step, so that you can analize the runtime
-
-        auto start = std::chrono::high_resolution_clock::now();
-
-        while (mima.canStep()) {
-            mima.step();
-            //std::this_thread::sleep_for(std::chrono::milliseconds(200));
-        }
-
-        auto finish = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = finish - start;
-        std::cout << "Elapsed time: " << elapsed.count() << " s\n";
+    std::cout << std::endl;
+    if (argc != 2) {
+        std::cout << "Add your Input Program File Path as a Command line Argument!" << std::endl;
+        return 1;
     }
 
-    std::cout << "Have a nice Day!" << std::endl;
+    std::cout << "Now Running Program " << argv[1] << std::endl;
+
+    auto instructions = InstructionParser().parse(argv[1]);
+
+    if (!instructions.has_value())
+        return 1;
+
+    Mima mima(*instructions);
+
+    auto start = std::chrono::high_resolution_clock::now();
+
+    while (mima.canStep())
+        mima.step();
+
+    auto finish = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = finish - start;
+    std::cout << std::endl << "Elapsed time: " << elapsed.count() << " s" << std::endl;
 }

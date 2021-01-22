@@ -9,8 +9,8 @@ struct instruction;
 class Mima {
 public:
     value Akku;
-    value Ir;
     value* M;
+    int IrAddress = 1048500;
 
     std::vector<instruction*> instructions;
 

@@ -110,7 +110,7 @@ struct JMP : public instruction {
     // Inherited via instruction
     virtual void run(Mima& mima) override
     {
-        mima.Ir.v = a.v;
+        mima.M[mima.IrAddress].v = a.v;
     }
 };
 
@@ -122,7 +122,7 @@ struct JMN : public instruction {
     virtual void run(Mima& mima) override
     {
         if (mima.Akku.v < 0)
-            mima.Ir.v = a.v;
+            mima.M[mima.IrAddress].v = a.v;
     }
 };
 
@@ -130,7 +130,7 @@ struct HALT : public instruction {
     // Inherited via instruction
     virtual void run(Mima& mima) override
     {
-        mima.Ir.v = mima.instructions.size();
+        mima.M[mima.IrAddress].v = mima.instructions.size();
     }
 };
 

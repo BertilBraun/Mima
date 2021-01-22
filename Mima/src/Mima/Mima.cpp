@@ -2,10 +2,11 @@
 #include "Instructions.h"
 
 void Mima::step() {
-    Ir.v++;
-    instructions[Ir.v - 1]->run(*this);
+    
+    M[IrAddress].v++;
+    instructions[M[IrAddress].v - 1]->run(*this);
 }
 
 bool Mima::canStep() {
-    return Ir.v < instructions.size();
+    return M[IrAddress].v < instructions.size();
 }
