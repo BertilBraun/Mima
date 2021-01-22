@@ -19,3 +19,23 @@
  - Start the Visual Studio Solution and Run
 
  Otherwise build it with clang or something similar, idk how :)
+
+# Commands
+
+ - LDC
+ - LDV
+ - STV
+ - ADD
+ - AND
+ - OR
+ - XOR
+ - EQL
+ - JMP
+ - JMN
+ - HALT
+ - NOT
+ - RAR
+ - LDIV
+ - STIV
+ - PRINTAKKU
+ - PRINT
